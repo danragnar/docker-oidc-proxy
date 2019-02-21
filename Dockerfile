@@ -23,7 +23,12 @@ RUN \
  cp -r /tmp/lua-resty-hmac-${HMAC_VERSION}/lib/resty/* /usr/local/openresty/lualib/resty/ && \
  rm -rf /tmp/* && \
  mkdir -p /usr/local/openresty/nginx/conf/hostsites/ && \
+ adduser -D -H oidc -G root && \
+ chown -R oidc:root /usr/local/openresty/ && \
+ chmod -R 775 /usr/local/openresty && \
  true
+
+USER oidc
 
 COPY bootstrap.sh /usr/local/openresty/bootstrap.sh
 COPY nginx /usr/local/openresty/nginx/
