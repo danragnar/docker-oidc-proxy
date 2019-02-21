@@ -24,13 +24,16 @@ RUN \
  rm -rf /tmp/* && \
  mkdir -p /usr/local/openresty/nginx/conf/hostsites/ && \
  adduser -D -H oidc -G root && \
- chown -R oidc:root /usr/local/openresty/ && \
- chmod -R 775 /usr/local/openresty && \
  true
 
-USER oidc
 
 COPY bootstrap.sh /usr/local/openresty/bootstrap.sh
 COPY nginx /usr/local/openresty/nginx/
+
+RUN \
+ chown -R oidc:root /usr/local/openresty/ && \
+ chmod -R 775 /usr/local/openresty
+
+USER oidc
 
 ENTRYPOINT ["/usr/local/openresty/bootstrap.sh"]
